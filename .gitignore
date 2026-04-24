@@ -1,0 +1,13 @@
+/.vercel/
+/.next/
+/out/
+/dist/
+/build/
+/node_modules/
+
+.DS_Store
+Thumbs.db
+
+*.log
+.env
+.env.*

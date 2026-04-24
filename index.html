@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Buddy Buddha — a gentle daily quote companion. Mindful clothing and a calm app for your pocket." />
+  <meta name="theme-color" content="#E68A49" />
+  <title>Buddy Buddha — Daily calm &amp; mindful goods</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=Fraunces:ital,opsz,wght@0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,400&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="site.css" />
+  <link rel="icon" href="BuddyBuddha-02.png" type="image/png" />
+  <link rel="apple-touch-icon" href="BuddyBuddha-02.png" />
+  <link rel="manifest" href="manifest.webmanifest" />
+</head>
+<body>
+  <header class="site-header">
+    <a class="brand" href="index.html">
+      <img src="BuddyBuddha-02.png" width="44" height="44" alt="" />
+      Buddy Buddha
+    </a>
+    <nav class="nav-links" aria-label="Main">
+      <a class="btn-ghost" href="shop.html">Shop</a>
+      <a class="btn-primary" href="buddy-buddha-app.html">Open app</a>
+    </nav>
+  </header>
+
+  <main>
+    <section class="hero" aria-labelledby="hero-title">
+      <div class="hero__bg" aria-hidden="true"></div>
+      <div class="hero__inner">
+        <div class="hero__visual">
+          <div class="hero__logo-ring">
+            <img src="BuddyBuddha-02.png" alt="Buddy Buddha — friendly meditative mascot logo" width="400" height="400" />
+          </div>
+        </div>
+        <div class="hero__copy">
+          <h1 id="hero-title">Small pauses. Big heart.</h1>
+          <p class="lead">
+            Buddy Buddha brings you a thoughtful quote every day of the year—plus mindful clothing when you want calm you can wear.
+          </p>
+          <div class="hero__ctas">
+            <a class="btn-primary" href="buddy-buddha-app.html">Try the daily quote app</a>
+            <button type="button" class="btn-secondary" id="install-btn" hidden>Install app</button>
+            <a class="btn-secondary" href="shop.html">Browse the shop</a>
+          </div>
+          <p class="install-hint" id="install-fallback" hidden>
+            <strong>iPhone / iPad:</strong> open the app in Safari, tap Share, then &ldquo;Add to Home Screen.&rdquo;
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" aria-labelledby="about-title">
+      <div class="section__inner">
+        <div class="image-split">
+          <div class="image-card image-card--logo">
+            <img src="BuddyBuddha-02.png" alt="Buddy Buddha character" width="600" height="600" />
+          </div>
+          <div>
+            <h2 id="about-title">About Buddy Buddha</h2>
+            <p>
+              Buddy Buddha is your cheerful pocket companion: warm colours, zero noise, and one meaningful line at a time. We built it for anyone who wants a moment of perspective between meetings, school runs, or late nights.
+            </p>
+            <p>
+              The shop extends that same feeling into what you wear—comfortable pieces with a calm, contemporary vibe. Same spirit: friendly, grounded, and a little bit playful.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" style="background: linear-gradient(180deg, transparent, rgba(230, 138, 73, 0.06))" aria-labelledby="features-title">
+      <div class="section__inner">
+        <h2 id="features-title" style="text-align: center; margin-bottom: 2rem">What you get</h2>
+        <div class="panels">
+          <article class="panel">
+            <div class="panel__img">
+              <img src="assets/panel-daily.svg" alt="" width="400" height="300" />
+            </div>
+            <h3>Daily quotes</h3>
+            <p>A full year of prompts—browse today, yesterday, or tomorrow.</p>
+          </article>
+          <article class="panel">
+            <div class="panel__img">
+              <img src="assets/panel-share.svg" alt="" width="400" height="300" />
+            </div>
+            <h3>Share the calm</h3>
+            <p>Share or copy lines that resonate—right from your phone.</p>
+          </article>
+          <article class="panel">
+            <div class="panel__img">
+              <img src="assets/panel-calm.svg" alt="" width="400" height="300" />
+            </div>
+            <h3>Mindful goods</h3>
+            <p>Clothing and more, curated to match the Buddy Buddha mood.</p>
+          </article>
+        </div>
+
+        <div class="cta-band">
+          <h2>Install the PWA</h2>
+          <p>Add Buddy Buddha to your home screen for a focused, app-like experience—works great on Android and desktop Chrome; iOS uses Add to Home Screen from Safari.</p>
+          <a class="btn-secondary" href="buddy-buddha-app.html">Open the app to install</a>
+          <p class="install-hint" id="pwa-note">
+            After opening the app, use your browser&rsquo;s install prompt when it appears, or keep this site bookmarked.
+          </p>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <p>&copy; Buddy Buddha. <a href="buddy-buddha-app.html">Daily quote app</a> · <a href="shop.html">Shop</a></p>
+  </footer>
+
+  <script>
+    (function () {
+      var installBtn = document.getElementById("install-btn");
+      var fallback = document.getElementById("install-fallback");
+      var deferred = null;
+
+      window.addEventListener("beforeinstallprompt", function (e) {
+        e.preventDefault();
+        deferred = e;
+        installBtn.hidden = false;
+      });
+
+      installBtn.addEventListener("click", function () {
+        if (!deferred) return;
+        deferred.prompt();
+        deferred.userChoice.finally(function () {
+          deferred = null;
+          installBtn.hidden = true;
+        });
+      });
+
+      window.addEventListener("appinstalled", function () {
+        installBtn.hidden = true;
+      });
+
+      var isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) ||
+        (navigator.platform === "MacIntel" && navigator.maxTouchPoints > 1);
+      if (isIOS) {
+        fallback.hidden = false;
+      }
+
+      if ("serviceWorker" in navigator) {
+        navigator.serviceWorker.register("sw.js").catch(function () {});
+      }
+    })();
+  </script>
+</body>
+</html>

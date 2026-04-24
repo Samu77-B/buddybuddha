@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 300" fill="none">
+  <rect width="400" height="300" fill="#EAD9C4"/>
+  <circle cx="200" cy="160" r="72" fill="#E68A49" opacity="0.25"/>
+  <circle cx="200" cy="160" r="48" fill="#E68A49" opacity="0.45"/>
+  <path d="M80 220c40-48 200-48 240 0" stroke="#332D2B" stroke-width="3" stroke-linecap="round" opacity="0.2"/>
+  <text x="200" y="265" text-anchor="middle" fill="#6B5E58" font-family="Georgia,serif" font-size="18">365 days</text>
+</svg>

@@ -1,0 +1,18 @@
+{
+  "name": "Buddy Buddha — Daily Quote",
+  "short_name": "BuddyBuddha",
+  "description": "A gentle Buddhist-inspired quote every day of the year.",
+  "start_url": "./buddy-buddha-app.html",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#F5E6D3",
+  "theme_color": "#E68A49",
+  "icons": [
+    {
+      "src": "./BuddyBuddha-02.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    }
+  ]
+}

@@ -1,0 +1,687 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#E68A49" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-title" content="Buddy Buddha" />
+  <title>Buddy Buddha – Daily Quote</title>
+  <link rel="manifest" href="manifest.webmanifest" />
+  <link rel="apple-touch-icon" href="BuddyBuddha-02.png" />
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      background: #F5C89A;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 2rem;
+    }
+
+    /* ── Phone shell ── */
+    .phone {
+      width: 320px;
+      background: #1a1a1a;
+      border-radius: 48px;
+      padding: 10px;
+      box-shadow: 0 24px 60px rgba(0,0,0,0.35);
+    }
+
+    /* ── Screen ── */
+    .screen {
+      border-radius: 40px;
+      overflow: hidden;
+      background: #FBE8D0;
+      min-height: 660px;
+      display: flex;
+      flex-direction: column;
+      position: relative;
+    }
+
+    /* ── Status bar ── */
+    .status-bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 14px 20px 4px;
+      font-size: 11px;
+      color: #5a4030;
+      position: relative;
+      z-index: 5;
+    }
+
+    .notch {
+      width: 90px;
+      height: 24px;
+      background: #1a1a1a;
+      border-radius: 0 0 16px 16px;
+      position: absolute;
+      top: 0;
+      left: 50%;
+      transform: translateX(-50%);
+    }
+
+    /* ── Logo ── */
+    .logo-area {
+      display: flex;
+      justify-content: center;
+      padding: 24px 0 0;
+      position: relative;
+      z-index: 2;
+    }
+
+    .logo-area img {
+      width: 110px;
+      height: 110px;
+      object-fit: contain;
+    }
+
+    /* ── Quote area ── */
+    .quote-area {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 12px 28px 16px;
+      position: relative;
+      z-index: 2;
+    }
+
+    /* Decorative SVG backgrounds */
+    .bg-hill {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .bg-lotus {
+      position: absolute;
+      bottom: 50px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 220px;
+      height: 160px;
+      opacity: 0.15;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .bg-waves {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      height: 80px;
+      opacity: 0.12;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .day-pill {
+      background: rgba(255,255,255,0.55);
+      border-radius: 99px;
+      padding: 4px 14px;
+      font-size: 11px;
+      color: #7a5030;
+      margin-bottom: 18px;
+      position: relative;
+      z-index: 2;
+    }
+
+    .quote-text {
+      font-size: 21px;
+      font-weight: 700;
+      color: #3a2510;
+      text-align: center;
+      line-height: 1.4;
+      font-family: Georgia, serif;
+      position: relative;
+      z-index: 2;
+    }
+
+    .quote-attr {
+      font-size: 20px;
+      font-weight: 700;
+      color: #3a2510;
+      text-align: center;
+      font-family: Georgia, serif;
+      margin-top: 10px;
+      position: relative;
+      z-index: 2;
+    }
+
+    /* ── Navigation ── */
+    .nav-row {
+      display: flex;
+      gap: 8px;
+      margin: 0 16px 12px;
+      position: relative;
+      z-index: 3;
+    }
+
+    .nav-btn {
+      flex: 1;
+      background: rgba(255,255,255,0.6);
+      border: 0.5px solid #d4b896;
+      border-radius: 12px;
+      padding: 9px 0;
+      font-size: 12px;
+      color: #5a3a1a;
+      cursor: pointer;
+      text-align: center;
+      transition: background 0.15s;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    .nav-btn:hover { background: rgba(255,255,255,0.85); }
+
+    .nav-btn-today {
+      background: #E8803A;
+      color: #fff;
+      border-color: #E8803A;
+    }
+
+    .nav-btn-today:hover { background: #d06e2a; }
+
+    /* ── Reflection bar ── */
+    .reflection-bar {
+      background: #fff;
+      margin: 0 16px 14px;
+      border-radius: 16px;
+      padding: 14px 16px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      position: relative;
+      z-index: 3;
+    }
+
+    .reflection-label {
+      font-size: 14px;
+      font-weight: 500;
+      color: #3a2510;
+    }
+
+    .share-btn {
+      background: #E8803A;
+      color: #fff;
+      border: none;
+      border-radius: 20px;
+      padding: 8px 16px;
+      font-size: 13px;
+      font-weight: 500;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      transition: background 0.15s;
+    }
+
+    .share-btn:hover { background: #d06e2a; }
+
+    /* ── Bottom nav ── */
+    .bottom-nav {
+      background: #fff;
+      border-top: 0.5px solid #e8d8c8;
+      display: flex;
+      justify-content: space-around;
+      padding: 10px 0 16px;
+      border-radius: 0 0 40px 40px;
+      position: relative;
+      z-index: 3;
+    }
+
+    .bnav-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 3px;
+      font-size: 11px;
+      color: #B4956A;
+      cursor: pointer;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    .bnav-item.active { color: #E8803A; }
+  </style>
+</head>
+<body>
+
+<div class="phone">
+  <div class="screen">
+
+    <!-- Status bar -->
+    <div class="status-bar">
+      <div class="notch"></div>
+      <span id="clock">9:41</span>
+      <span style="display:flex;gap:4px;align-items:center;">
+        <!-- Signal bars -->
+        <svg width="12" height="10" viewBox="0 0 12 10"><rect x="0" y="4" width="2" height="6" rx="1" fill="#5a4030"/><rect x="3" y="2.5" width="2" height="7.5" rx="1" fill="#5a4030"/><rect x="6" y="1" width="2" height="9" rx="1" fill="#5a4030"/><rect x="9" y="0" width="2" height="10" rx="1" fill="#5a4030"/></svg>
+        <!-- WiFi -->
+        <svg width="13" height="10" viewBox="0 0 13 10"><path d="M6.5 2C4.2 2 2.1 3 0.7 4.6L2 5.9C3.1 4.7 4.7 4 6.5 4s3.4.7 4.5 1.9L12.3 4.6C10.9 3 8.8 2 6.5 2z" fill="#5a4030"/><path d="M6.5 5.5c-1.3 0-2.4.5-3.2 1.3L4.5 8c.6-.6 1.2-.9 2-.9s1.4.3 2 .9l1.2-1.2c-.8-.8-1.9-1.3-3.2-1.3z" fill="#5a4030"/><circle cx="6.5" cy="9.5" r="1" fill="#5a4030"/></svg>
+        <!-- Battery -->
+        <svg width="22" height="10" viewBox="0 0 22 10"><rect x="0" y="1" width="18" height="8" rx="2" stroke="#5a4030" stroke-width="1" fill="none"/><rect x="1" y="2" width="14" height="6" rx="1" fill="#5a4030"/><rect x="18.5" y="3" width="2" height="4" rx="1" fill="#5a4030"/></svg>
+      </span>
+    </div>
+
+    <!-- Logo -->
+    <div class="logo-area">
+      <!--
+        LOGO: BuddyBuddha-02.png in the site root.
+      -->
+      <img src="BuddyBuddha-02.png" alt="Buddy Buddha" />
+      <a href="index.html" style="display:block;margin-top:8px;font-size:11px;color:#7a5030;text-decoration:none;font-weight:600;">← Buddy Buddha website</a>
+    </div>
+
+    <!-- Quote area -->
+    <div class="quote-area">
+
+      <!-- Soft hill background -->
+      <svg class="bg-hill" viewBox="0 0 320 400" preserveAspectRatio="none" fill="none">
+        <ellipse cx="160" cy="480" rx="230" ry="200" fill="#EDBA84" opacity="0.35"/>
+      </svg>
+
+      <!-- Lotus decorative background -->
+      <svg class="bg-lotus" viewBox="0 0 220 160" fill="none">
+        <ellipse cx="110" cy="130" rx="40" ry="18" fill="#E8803A"/>
+        <ellipse cx="110" cy="100" rx="28" ry="55" fill="#E8803A"/>
+        <ellipse cx="68" cy="110" rx="22" ry="46" transform="rotate(-22 68 110)" fill="#E8803A"/>
+        <ellipse cx="152" cy="110" rx="22" ry="46" transform="rotate(22 152 110)" fill="#E8803A"/>
+        <ellipse cx="36" cy="118" rx="18" ry="36" transform="rotate(-44 36 118)" fill="#E8803A"/>
+        <ellipse cx="184" cy="118" rx="18" ry="36" transform="rotate(44 184 118)" fill="#E8803A"/>
+      </svg>
+
+      <!-- Wave decorative background -->
+      <svg class="bg-waves" viewBox="0 0 320 80" fill="none">
+        <path d="M0 40 Q20 20 40 40 Q60 60 80 40 Q100 20 120 40 Q140 60 160 40 Q180 20 200 40 Q220 60 240 40 Q260 20 280 40 Q300 60 320 40 L320 80 L0 80Z" fill="#E8803A"/>
+        <path d="M0 55 Q20 35 40 55 Q60 75 80 55 Q100 35 120 55 Q140 75 160 55 Q180 35 200 55 Q220 75 240 55 Q260 35 280 55 Q300 75 320 55 L320 80 L0 80Z" fill="#E8803A" opacity="0.5"/>
+      </svg>
+
+      <div class="day-pill" id="day-pill">Day 109 of 365 · Sunday, 19 April</div>
+      <div class="quote-text" id="quote-text">Peace comes from within. Do not seek it without.</div>
+      <div class="quote-attr" id="quote-attr">- Buddha</div>
+    </div>
+
+    <!-- Prev / Today / Next -->
+    <div class="nav-row">
+      <div class="nav-btn" id="btn-prev" onclick="changeDay(-1)">← Prev</div>
+      <div class="nav-btn nav-btn-today" onclick="goToday()">Today</div>
+      <div class="nav-btn" id="btn-next" onclick="changeDay(1)">Next →</div>
+    </div>
+
+    <!-- Reflection bar -->
+    <div class="reflection-bar">
+      <span class="reflection-label">Today's Reflection</span>
+      <button class="share-btn" onclick="shareQuote()">
+        <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+          <path d="M9 1l4 4-4 4" stroke="#fff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+          <path d="M13 5H5a4 4 0 000 8h1" stroke="#fff" stroke-width="1.5" stroke-linecap="round"/>
+        </svg>
+        Share
+      </button>
+    </div>
+
+    <!-- Bottom nav -->
+    <div class="bottom-nav">
+      <div class="bnav-item active" onclick="setTab(this, 'home')">
+        <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+          <path d="M3 9L10 3l7 6v8a1 1 0 01-1 1H4a1 1 0 01-1-1V9z" fill="#E8803A"/>
+        </svg>
+        <span>Home</span>
+      </div>
+      <div class="bnav-item" onclick="setTab(this, 'messages')">
+        <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+          <path d="M4 4h12a1 1 0 011 1v7a1 1 0 01-1 1H6l-3 3V5a1 1 0 011-1z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/>
+        </svg>
+        <span>Messages</span>
+      </div>
+      <div class="bnav-item" onclick="window.location.href='shop.html'">
+        <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+          <path d="M2 3h2l2.5 9h9l2-6H6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+          <circle cx="9" cy="16" r="1.5" fill="currentColor"/>
+          <circle cx="15" cy="16" r="1.5" fill="currentColor"/>
+        </svg>
+        <span>Shop</span>
+      </div>
+      <div class="bnav-item" onclick="setTab(this, 'profile')">
+        <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+          <circle cx="10" cy="7" r="3" stroke="currentColor" stroke-width="1.5"/>
+          <path d="M4 18c0-3.314 2.686-6 6-6s6 2.686 6 6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+        </svg>
+        <span>Profile</span>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<script>
+  // ── 365 quotes ──────────────────────────────────────────────────────────────
+  const quotes = [
+    { q: "Do not dwell in the past, do not dream of the future, concentrate the mind on the present moment.", a: "Buddha" },
+    { q: "Peace comes from within. Do not seek it without.", a: "Buddha" },
+    { q: "Three things cannot be long hidden: the sun, the moon, and the truth.", a: "Buddha" },
+    { q: "You yourself, as much as anybody in the entire universe, deserve your love and affection.", a: "Buddha" },
+    { q: "The mind is everything. What you think you become.", a: "Buddha" },
+    { q: "Thousands of candles can be lit from a single candle, and the life of the candle will not be shortened.", a: "Buddha" },
+    { q: "Holding on to anger is like grasping a hot coal with the intent of throwing it at someone else.", a: "Buddha" },
+    { q: "Hatred does not cease through hatred at any time. Hatred ceases through love.", a: "The Dhammapada" },
+    { q: "The mind is the source of happiness and unhappiness.", a: "Buddha" },
+    { q: "No one saves us but ourselves. We ourselves must walk the path.", a: "Buddha" },
+    { q: "In the beginner's mind there are many possibilities, in the expert's mind there are few.", a: "Shunryū Suzuki" },
+    { q: "The present moment is the only moment available to us, and it is the door to all moments.", a: "Thich Nhat Hanh" },
+    { q: "Smile, breathe, and go slowly.", a: "Thich Nhat Hanh" },
+    { q: "If you want others to be happy, practice compassion.", a: "The Dalai Lama" },
+    { q: "My religion is very simple. My religion is kindness.", a: "The Dalai Lama" },
+    { q: "Before enlightenment, chop wood, carry water. After enlightenment, chop wood, carry water.", a: "Zen kōan" },
+    { q: "Let go, or be dragged.", a: "Zen proverb" },
+    { q: "The obstacle is the path.", a: "Zen proverb" },
+    { q: "To study the self is to forget the self.", a: "Dōgen Zenji" },
+    { q: "All the suffering in the world arises from seeking happiness for yourself.", a: "Śāntideva" },
+    { q: "You are the sky. Everything else is just the weather.", a: "Pema Chödrön" },
+    { q: "Nothing ever goes away until it has taught us what we need to know.", a: "Pema Chödrön" },
+    { q: "Walk as if you are kissing the Earth with your feet.", a: "Thich Nhat Hanh" },
+    { q: "May all beings be happy. May all beings be peaceful. May all beings be free from suffering.", a: "Metta Sutta" },
+    { q: "This too shall pass.", a: "Buddhist-Sufi wisdom" },
+    { q: "Fall down seven times, stand up eight.", a: "Japanese Buddhist proverb" },
+    { q: "There is no path to happiness: happiness is the path.", a: "Buddha" },
+    { q: "A jug fills drop by drop.", a: "Buddha" },
+    { q: "Be a lamp unto yourself.", a: "Buddha" },
+    { q: "Happiness is not something ready-made. It comes from your own actions.", a: "The Dalai Lama" },
+    { q: "If you knew what I know about the power of giving, you would not let a single meal pass without sharing it.", a: "Buddha" },
+    { q: "The foot feels the foot when it feels the ground.", a: "Buddha" },
+    { q: "However many holy words you read, what good will they do you if you do not act on them?", a: "Buddha" },
+    { q: "To live a pure unselfish life, one must count nothing as one's own in the midst of abundance.", a: "Buddha" },
+    { q: "Work out your own salvation. Do not depend on others.", a: "Buddha" },
+    { q: "With our thoughts we make the world.", a: "The Dhammapada" },
+    { q: "If we could see the miracle of a single flower clearly, our whole life would change.", a: "Buddha" },
+    { q: "Better than a thousand hollow words is one word that brings peace.", a: "The Dhammapada" },
+    { q: "Even death is not to be feared by one who has lived wisely.", a: "Buddha" },
+    { q: "Give, even if you only have a little.", a: "The Dhammapada" },
+    { q: "One moment can change a day, one day can change a life, and one life can change the world.", a: "Buddha" },
+    { q: "Set your heart on doing good. Do it over and over again, and you will be filled with joy.", a: "The Dhammapada" },
+    { q: "The whole secret of existence is to have no fear.", a: "Buddha" },
+    { q: "Silence is an empty space. Space is the home of the awakened mind.", a: "Buddha" },
+    { q: "Nothing ever exists entirely alone; everything is in relation to everything else.", a: "Buddha" },
+    { q: "Radiate boundless love towards the entire world — above, below, and across.", a: "Buddha" },
+    { q: "As you walk and eat and travel, be where you are. Otherwise you will miss most of your life.", a: "Buddha" },
+    { q: "It is ridiculous to think that somebody else can make you happy or unhappy.", a: "Buddha" },
+    { q: "Chaos is inherent in all compounded things. Strive on with diligence.", a: "Buddha" },
+    { q: "Should a seeker not find a companion who is better or equal, let them resolutely pursue a solitary course.", a: "Buddha" },
+    { q: "One who acts on truth is happy, in this world and beyond.", a: "The Dhammapada" },
+    { q: "The greatest prayer is patience.", a: "Buddha" },
+    { q: "A disciplined mind brings happiness.", a: "The Dhammapada" },
+    { q: "Drop by drop is the water pot filled.", a: "The Dhammapada" },
+    { q: "We are shaped by our thoughts; we become what we think.", a: "The Dhammapada" },
+    { q: "In separateness lies the world's great misery; in compassion lies the world's true strength.", a: "Buddha" },
+    { q: "Learn this from water: loud splashes the brook, but the ocean's depth are calm.", a: "Buddha" },
+    { q: "If anything is worth doing, do it with all your heart.", a: "The Dhammapada" },
+    { q: "The way is not in the sky. The way is in the heart.", a: "The Dhammapada" },
+    { q: "There is no fire like passion, no crime like hatred, no sorrow like separation.", a: "The Dhammapada" },
+    { q: "Pain is certain, suffering is optional.", a: "Buddhist teaching" },
+    { q: "If you are quiet enough, you will hear the flow of the universe.", a: "Buddha" },
+    { q: "When words are both true and kind, they can change the world.", a: "Buddha" },
+    { q: "As a solid rock is not shaken by the wind, wise people falter not amidst blame and praise.", a: "The Dhammapada" },
+    { q: "Better it is to live one day seeing the rise and fall of things than to live a hundred years without ever seeing them.", a: "The Dhammapada" },
+    { q: "To conquer oneself is a greater task than conquering others.", a: "Buddha" },
+    { q: "Purity or impurity depends on oneself. No one can purify another.", a: "The Dhammapada" },
+    { q: "The secret of health for both mind and body is to live the present moment wisely.", a: "Buddha" },
+    { q: "All that we are is the result of what we have thought.", a: "The Dhammapada" },
+    { q: "There are only two mistakes one can make along the road to truth: not going all the way, and not starting.", a: "Buddha" },
+    { q: "Let yourself be open and life will be easier.", a: "Buddha" },
+    { q: "If the problem has a solution, worrying is pointless. If it has no solution, there is no reason to worry.", a: "Tibetan Buddhist teaching" },
+    { q: "Nothing is permanent.", a: "Buddha" },
+    { q: "Meditation brings wisdom; lack of meditation leaves ignorance.", a: "The Dhammapada" },
+    { q: "You only lose what you cling to.", a: "Buddha" },
+    { q: "Every human being is the author of his own health or disease.", a: "Buddha" },
+    { q: "Look within, thou art the Buddha.", a: "Buddha" },
+    { q: "Meditate. Live purely. Be quiet. Do your work with mastery. Shine.", a: "The Dhammapada" },
+    { q: "Praise and blame, gain and loss, pleasure and sorrow come and go like the wind.", a: "Buddha" },
+    { q: "If you are patient in one moment of anger, you will escape a hundred days of sorrow.", a: "Chinese Buddhist proverb" },
+    { q: "The ocean refuses no river.", a: "Zen saying" },
+    { q: "Sitting quietly, doing nothing, spring comes, and the grass grows by itself.", a: "Zen poem" },
+    { q: "Not knowing is most intimate.", a: "Zen kōan" },
+    { q: "The whole moon and the entire sky are reflected in one dewdrop on the grass.", a: "Dōgen Zenji" },
+    { q: "A flower falls even though we love it, and a weed grows even though we do not love it.", a: "Dōgen Zenji" },
+    { q: "Think with the whole body.", a: "Taisen Deshimaru" },
+    { q: "Treat every moment as your last. It is not preparation for something else.", a: "Shunryū Suzuki" },
+    { q: "Each of you is perfect the way you are... and you can use a little improvement.", a: "Shunryū Suzuki" },
+    { q: "The most important point is to accept yourself and stand on your two feet.", a: "Shunryū Suzuki" },
+    { q: "Life is a matter of miracles and dancing, not of problems to be solved.", a: "Thich Nhat Hanh" },
+    { q: "Because you are alive, everything is possible.", a: "Thich Nhat Hanh" },
+    { q: "Feelings come and go like clouds in a windy sky. Conscious breathing is my anchor.", a: "Thich Nhat Hanh" },
+    { q: "The seed of suffering in you may be strong, but don't wait until you have no more suffering before allowing yourself to be happy.", a: "Thich Nhat Hanh" },
+    { q: "To be beautiful means to be yourself. You don't need to be accepted by others.", a: "Thich Nhat Hanh" },
+    { q: "The most precious gift we can offer anyone is our attention.", a: "Thich Nhat Hanh" },
+    { q: "Waking up this morning, I smile. Twenty-four brand new hours are before me.", a: "Thich Nhat Hanh" },
+    { q: "When another person makes you suffer, it is because he suffers deeply within himself.", a: "Thich Nhat Hanh" },
+    { q: "The lotus flower blooms most beautifully from the deepest and thickest mud.", a: "Buddhist teaching" },
+    { q: "All beings tremble before violence. All fear death. All love life. See yourself in others.", a: "The Dhammapada" },
+    { q: "Health is the highest gift; contentment is the greatest wealth; nirvana is the highest happiness.", a: "The Dhammapada" },
+    { q: "Hard it is to train the mind, which goes where it likes and does what it wants.", a: "The Dhammapada" },
+    { q: "Mindfulness is the path to the deathless; heedlessness is the path to death.", a: "The Dhammapada" },
+    { q: "Attachment is the origin, the root of suffering; hence it is the cause of suffering.", a: "The Dalai Lama" },
+    { q: "The purpose of our lives is to be happy.", a: "The Dalai Lama" },
+    { q: "Happiness is not something ready-made. It comes from your own actions.", a: "The Dalai Lama" },
+    { q: "In the practice of tolerance, one's enemy is the best teacher.", a: "The Dalai Lama" },
+    { q: "Sleep is the best meditation.", a: "The Dalai Lama" },
+    { q: "Old friends pass away, new friends appear. It is just like the days.", a: "The Dalai Lama" },
+    { q: "All major religious traditions carry basically the same message: love, compassion, and forgiveness.", a: "The Dalai Lama" },
+    { q: "With realization of one's own potential and self-confidence, one can build a better world.", a: "The Dalai Lama" },
+    { q: "Those who are free of resentful thoughts surely find peace.", a: "The Dhammapada" },
+    { q: "We have more possibilities available in each moment than we realize.", a: "Thich Nhat Hanh" },
+    { q: "What you are is what you have been. What you will be is what you do now.", a: "Buddha" },
+    { q: "Contentment is the greatest wealth.", a: "Buddha" },
+    { q: "To keep the body in good health is a duty, otherwise we shall not be able to keep our mind strong and clear.", a: "Buddha" },
+    { q: "The one who has conquered himself is a far greater hero than he who has defeated a thousand men.", a: "The Dhammapada" },
+    { q: "Live with no sense of mine, not forming attachment to experiences.", a: "Buddha" },
+    { q: "Understanding is the heartwood of well-spoken words.", a: "Buddha" },
+    { q: "Irrigators channel waters; fletchers straighten arrows; carpenters shape wood; the wise master themselves.", a: "The Dhammapada" },
+    { q: "Don't rush anything. When the time is right, it will happen.", a: "Buddhist teaching" },
+    { q: "You cannot travel the path until you have become the path itself.", a: "Buddha" },
+    { q: "One who neither grasps nor rejects has arrived.", a: "Seng Ts'an" },
+    { q: "When love and hatred are both absent, everything becomes clear.", a: "Seng Ts'an" },
+    { q: "The less you respond to negativity, the more peaceful your life becomes.", a: "Buddhist teaching" },
+    { q: "Our sorrows and wounds are healed only when we touch them with compassion.", a: "Jack Kornfield" },
+    { q: "The trouble is, you think you have time.", a: "Jack Kornfield" },
+    { q: "If you cannot find the truth right where you are, where else do you expect to find it?", a: "Dōgen Zenji" },
+    { q: "Being is time, and time is being.", a: "Dōgen Zenji" },
+    { q: "There are only two days in the year that nothing can be done. One is Yesterday and the other is Tomorrow.", a: "The Dalai Lama" },
+    { q: "Love and compassion are necessities, not luxuries. Without them humanity cannot survive.", a: "The Dalai Lama" },
+    { q: "The true hero is one who conquers his own anger and hatred.", a: "The Dalai Lama" },
+    { q: "Don't let the behavior of others destroy your inner peace.", a: "The Dalai Lama" },
+    { q: "The more you are motivated by love, the more fearless and free your actions will be.", a: "The Dalai Lama" },
+    { q: "All the way to heaven is heaven.", a: "Zen saying" },
+    { q: "The whole of the dharma is encapsulated in this: not to harm others and to help them.", a: "Atiśa" },
+    { q: "Whatever joy there is in this world, all comes from desiring others to be happy.", a: "Śāntideva" },
+    { q: "Form is emptiness; emptiness is form.", a: "Heart Sūtra" },
+    { q: "All conditioned things are impermanent. Work out your salvation with diligence.", a: "Buddha, final words" },
+    { q: "A mind untroubled by the vagaries of fortune — this is the greatest blessing.", a: "Mangala Sutta" },
+    { q: "Mountains are mountains, rivers are rivers.", a: "Zen kōan" },
+    { q: "Great doubt: great awakening. Little doubt: little awakening. No doubt: no awakening.", a: "Zen saying" },
+    { q: "A thousand-mile journey begins with a single step.", a: "Laozi" },
+    { q: "Not I, not other than I.", a: "Zen kōan" },
+    { q: "May I be the doctor and medicine for the sick and weary.", a: "Śāntideva" },
+    { q: "The best way to take care of the future is to take care of the present moment.", a: "Thich Nhat Hanh" },
+    { q: "Not all storms come to disrupt your life. Some come to clear your path.", a: "Buddhist-inspired teaching" },
+    { q: "The mind that has no fixed abode — therein lies awakening.", a: "Diamond Sūtra" },
+    { q: "May you be safe. May you be happy. May you be healthy. May you live with ease.", a: "Metta practice" },
+    { q: "Rest in natural great peace this exhausted mind, beaten helpless by karma and neurotic thoughts.", a: "Nyoshul Khen Rinpoche" },
+    { q: "Mind is like the sky: vast, open, and naturally at rest.", a: "Tibetan Buddhist teaching" },
+    { q: "Life is a series of natural and spontaneous changes. Don't resist them.", a: "Laozi" },
+    { q: "When I let go of what I am, I become what I might be.", a: "Laozi" },
+    { q: "Nature does not hurry, yet everything is accomplished.", a: "Laozi" },
+    { q: "You yourself must strive. The Buddhas only point the way.", a: "The Dhammapada" },
+    { q: "Better than a hundred years of mischief is one day spent in contemplation.", a: "The Dhammapada" },
+    { q: "It is a man's own mind, not his enemy or foe, that lures him to evil ways.", a: "The Dhammapada" },
+    { q: "The most fundamental harm we can do to ourselves is to remain ignorant by not having the courage to look at ourselves honestly.", a: "Pema Chödrön" },
+    { q: "Compassion is not a relationship between the healer and the wounded. It's a relationship between equals.", a: "Pema Chödrön" },
+    { q: "The bad news is you're falling through the air with nothing to hold on to. The good news is there's no ground.", a: "Chögyam Trungpa" },
+    { q: "You can't stop the waves, but you can learn to surf.", a: "Jon Kabat-Zinn" },
+    { q: "Wherever you go, there you are.", a: "Jon Kabat-Zinn" },
+    { q: "Mindfulness means being awake. It means knowing what you are doing.", a: "Jon Kabat-Zinn" },
+    { q: "Patience is not the ability to wait, but the ability to keep a good attitude while waiting.", a: "Buddhist teaching" },
+    { q: "Kindness in words creates confidence. Kindness in thinking creates profoundness. Kindness in giving creates love.", a: "Laozi" },
+    { q: "May all that have life be delivered from suffering.", a: "Buddhist aspiration" },
+    { q: "Everything is impermanent — enjoy it while it lasts.", a: "Buddhist teaching" },
+    { q: "Breathe in deeply to bring your mind home to your body.", a: "Thich Nhat Hanh" },
+    { q: "There is no enlightenment outside of daily life.", a: "Thich Nhat Hanh" },
+    { q: "Peace is not the absence of conflict, but the ability to cope with it.", a: "Buddhist teaching" },
+    { q: "If you think you are too small to make a difference, try sleeping with a mosquito.", a: "The Dalai Lama" },
+    { q: "We need to learn to want what we have, not to have what we want, to get stable and steady happiness.", a: "The Dalai Lama" },
+    { q: "Sometimes one creates a dynamic impression by saying something, and sometimes by remaining silent.", a: "The Dalai Lama" },
+    { q: "In the end, only three things matter: how much you loved, how fully you lived, how deeply you let go.", a: "Jack Kornfield" },
+    { q: "Everything in moderation, including moderation.", a: "Buddhist wisdom" },
+    { q: "The middle path avoids both indulgence and austerity.", a: "Buddha" },
+    { q: "Guard your thoughts; they become your words. Guard your words; they become your deeds.", a: "Buddhist teaching" },
+    { q: "This moment is not a rehearsal.", a: "Buddhist teaching" },
+    { q: "Wisdom begins in wonder.", a: "Buddhist teaching" },
+    { q: "Be the change you wish to see in the world.", a: "Mahatma Gandhi" },
+    { q: "Very little is needed to make a happy life; it is all within yourself, in your way of thinking.", a: "Marcus Aurelius" },
+    { q: "Confine yourself to the present.", a: "Marcus Aurelius" },
+    { q: "The soul becomes dyed with the colour of its thoughts.", a: "Marcus Aurelius" },
+    { q: "When you arise in the morning, think of what a precious privilege it is to be alive.", a: "Marcus Aurelius" },
+    { q: "Accept the things to which fate binds you, and love the people with whom fate brings you together.", a: "Marcus Aurelius" },
+    { q: "Out beyond ideas of wrongdoing and rightdoing, there is a field. I'll meet you there.", a: "Rumi" },
+    { q: "Yesterday I was clever, so I wanted to change the world. Today I am wise, so I am changing myself.", a: "Rumi" },
+    { q: "Wear gratitude like a cloak and it will feed every corner of your life.", a: "Rumi" },
+    { q: "The wound is the place where the Light enters you.", a: "Rumi" },
+    { q: "Let silence take you to the core of life.", a: "Rumi" },
+    { q: "What you seek is seeking you.", a: "Rumi" },
+    { q: "Set your life on fire. Seek those who fan your flames.", a: "Rumi" },
+    { q: "Fall down seven times, get up eight. The 8th time is what defines you.", a: "Buddhist teaching" },
+    { q: "Every step of the journey is the journey.", a: "Zen saying" },
+    { q: "No snowflake ever falls in the wrong place.", a: "Zen proverb" },
+    { q: "When the water is still, all the stars in the universe are reflected in it.", a: "Zen saying" },
+    { q: "The snow falls, each flake in its appropriate place.", a: "Matsuo Bashō" },
+    { q: "We are always starting over, again and again and again.", a: "Shunryū Suzuki" },
+    { q: "Sometimes the most important thing in a whole day is the rest we take between two deep breaths.", a: "Buddhist teaching" },
+    { q: "I am not what happened to me. I am what I choose to become.", a: "Buddhist-inspired" },
+    { q: "The present moment always will have been.", a: "Buddhist teaching" },
+    { q: "If you want to awaken all of humanity, then awaken all of yourself.", a: "Laozi" },
+    { q: "As long as we have hope, we have direction, the energy to move, and the map to move by.", a: "Lama Yeshe" },
+    { q: "Everything that has a beginning has an ending. Make your peace with that and all will be well.", a: "Jack Kornfield" },
+    { q: "Doing nothing is better than being busy doing nothing.", a: "Laozi" },
+    { q: "Be careful with your words. Once they are said, they can be only forgiven, not forgotten.", a: "Buddhist teaching" },
+    { q: "Not all those who wander are lost.", a: "J.R.R. Tolkien" },
+    { q: "Start where you are. Use what you have. Do what you can.", a: "Buddhist teaching" },
+    { q: "Spread love everywhere you go. Let no one ever come to you without leaving happier.", a: "Buddhist teaching" },
+    { q: "Life is suffering, but suffering is not all of life.", a: "Buddhist teaching" },
+    { q: "The more you have, the more you are occupied. The less you have, the more free you are.", a: "Buddhist teaching" },
+    { q: "Wherever you are, be all there.", a: "Buddhist teaching" },
+    { q: "Do not spoil what you have by desiring what you have not.", a: "Buddhist teaching" },
+    { q: "Simplicity is the ultimate sophistication.", a: "Zen-inspired" },
+    { q: "Suffering usually relates to wanting things to be different from the way they are.", a: "Buddhist teaching" },
+    { q: "We are all just walking each other home.", a: "Ram Dass" },
+    { q: "Be here now.", a: "Ram Dass" },
+    { q: "Treat every person as though they are the divine in disguise.", a: "Ram Dass" },
+    { q: "Do what you can, with what you have, where you are.", a: "Buddhist-inspired wisdom" },
+    { q: "You are not a drop in the ocean. You are the entire ocean in a drop.", a: "Rumi" },
+    { q: "Only from the heart can you touch the sky.", a: "Rumi" },
+    { q: "Muddy water, let stand — becomes clear.", a: "Zen saying" },
+    { q: "Even if things don't unfold the way you expected, don't be disheartened or give up.", a: "The Dalai Lama" },
+    { q: "Act always as if the future of the universe depended on what you do.", a: "Huangbo" },
+    { q: "Where there is great love, there are always miracles.", a: "Buddhist teaching" },
+    { q: "Arriving at each new city, the traveller finds again a self he did not know he had before.", a: "Zen-inspired" },
+    { q: "A human being is a part of the whole — we experience ourselves as something separate, which is an optical delusion.", a: "Albert Einstein" },
+    { q: "The measure of intelligence is the ability to change.", a: "Buddhist teaching" },
+    { q: "Imagination is more important than knowledge.", a: "Buddhist-inspired" },
+    { q: "Only a life lived for others is a life worthwhile.", a: "Buddhist teaching" },
+    { q: "Nonviolence is the greatest force at the disposal of mankind.", a: "Mahatma Gandhi" },
+    { q: "When you realize how perfect everything is, you will tilt your head back and laugh at the sky.", a: "Buddha" },
+    { q: "Wherever I am is called Here, and I must treat it as a powerful stranger.", a: "Zen teaching" },
+    { q: "Between stimulus and response there is a space. In that space is our power to choose.", a: "Buddhist psychology" },
+    { q: "The best and most beautiful things in the world cannot be seen or touched. They must be felt with the heart.", a: "Buddhist teaching" },
+    { q: "What we resist persists.", a: "Buddhist teaching" },
+    { q: "We don't see things as they are; we see them as we are.", a: "Buddhist teaching" },
+    { q: "In the sky, there is no distinction of east and west; people create distinctions out of their own minds.", a: "Buddha" },
+  ];
+
+  // ── Utility ────────────────────────────────────────────────────────────────
+  function getDayOfYear(date) {
+    const start = new Date(date.getFullYear(), 0, 0);
+    return Math.floor((date - start) / 86400000);
+  }
+
+  function formatDate(doy) {
+    const d = new Date(new Date().getFullYear(), 0, doy);
+    return d.toLocaleDateString('en-GB', { weekday: 'long', day: 'numeric', month: 'long' });
+  }
+
+  function getQuote(day) {
+    const idx = ((day - 1) % quotes.length + quotes.length) % quotes.length;
+    return quotes[idx];
+  }
+
+  // ── State ──────────────────────────────────────────────────────────────────
+  const todayDOY = getDayOfYear(new Date());
+  let currentDay = todayDOY;
+
+  // ── Render ─────────────────────────────────────────────────────────────────
+  function render(day) {
+    const q = getQuote(day);
+    document.getElementById('quote-text').textContent = q.q;
+    document.getElementById('quote-attr').textContent = '- ' + q.a;
+    document.getElementById('day-pill').textContent = 'Day ' + day + ' of 365 · ' + formatDate(day);
+    document.getElementById('btn-prev').style.opacity = day <= 1 ? '0.35' : '1';
+    document.getElementById('btn-next').style.opacity = day >= 365 ? '0.35' : '1';
+  }
+
+  // ── Controls ───────────────────────────────────────────────────────────────
+  function changeDay(delta) {
+    const next = currentDay + delta;
+    if (next >= 1 && next <= 365) {
+      currentDay = next;
+      render(currentDay);
+    }
+  }
+
+  function goToday() {
+    currentDay = todayDOY;
+    render(currentDay);
+  }
+
+  function setTab(el, tab) {
+    document.querySelectorAll('.bnav-item').forEach(b => b.classList.remove('active'));
+    el.classList.add('active');
+    // TODO: add tab-switching logic here
+  }
+
+  function shareQuote() {
+    const q = getQuote(currentDay);
+    const text = '"' + q.q + '" — ' + q.a;
+    if (navigator.share) {
+      navigator.share({ title: 'Buddy Buddha', text });
+    } else if (navigator.clipboard) {
+      navigator.clipboard.writeText(text).then(() => alert('Quote copied to clipboard!'));
+    }
+  }
+
+  // ── Live clock ─────────────────────────────────────────────────────────────
+  function updateClock() {
+    const now = new Date();
+    const h = now.getHours().toString().padStart(2, '0');
+    const m = now.getMinutes().toString().padStart(2, '0');
+    document.getElementById('clock').textContent = h + ':' + m;
+  }
+  updateClock();
+  setInterval(updateClock, 30000);
+
+  // ── Init ───────────────────────────────────────────────────────────────────
+  render(currentDay);
+
+  if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.register('sw.js').catch(function () {});
+  }
+</script>
+
+</body>
+</html>
