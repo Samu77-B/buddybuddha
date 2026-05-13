@@ -9,8 +9,8 @@
   "theme_color": "#E68A49",
   "icons": [
     {
-      "src": "./BuddyBuddha-02.png",
-      "sizes": "512x512",
+      "src": "./assets/fav.png",
+      "sizes": "1000x904",
       "type": "image/png",
       "purpose": "any"
     }

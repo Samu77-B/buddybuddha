@@ -1,52 +1,52 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="description" content="Buddy Buddha — a gentle daily quote companion. Mindful clothing and a calm app for your pocket." />
-  <meta name="theme-color" content="#E68A49" />
-  <title>Buddy Buddha — Daily calm &amp; mindful goods</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=Fraunces:ital,opsz,wght@0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,400&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="site.css" />
-  <link rel="icon" href="BuddyBuddha-02.png" type="image/png" />
-  <link rel="apple-touch-icon" href="BuddyBuddha-02.png" />
-  <link rel="manifest" href="manifest.webmanifest" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Buddy Buddha — a gentle daily quote companion. Mindful clothing and a calm app for your pocket.">
+  <meta name="theme-color" content="#E68A49">
+  <title>Buddy Buddha — Find your inner peace</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=Fraunces:ital,opsz,wght@0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,400&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="site.css">
+  <link rel="icon" href="assets/fav.png" type="image/png">
+  <link rel="apple-touch-icon" href="assets/fav.png">
+  <link rel="manifest" href="manifest.webmanifest">
 </head>
-<body>
-  <header class="site-header">
-    <a class="brand" href="index.html">
-      <img src="BuddyBuddha-02.png" width="44" height="44" alt="" />
-      Buddy Buddha
-    </a>
-    <nav class="nav-links" aria-label="Main">
-      <a class="btn-ghost" href="shop.html">Shop</a>
-      <a class="btn-primary" href="buddy-buddha-app.html">Open app</a>
-    </nav>
-  </header>
+<body data-nav-active="home">
+  <div id="site-header-root"></div>
 
   <main>
-    <section class="hero" aria-labelledby="hero-title">
-      <div class="hero__bg" aria-hidden="true"></div>
-      <div class="hero__inner">
-        <div class="hero__visual">
-          <div class="hero__logo-ring">
-            <img src="BuddyBuddha-02.png" alt="Buddy Buddha — friendly meditative mascot logo" width="400" height="400" />
-          </div>
-        </div>
-        <div class="hero__copy">
-          <h1 id="hero-title">Small pauses. Big heart.</h1>
-          <p class="lead">
-            Buddy Buddha brings you a thoughtful quote every day of the year—plus mindful clothing when you want calm you can wear.
+    <section class="landing-hero" aria-labelledby="hero-title">
+      <div class="landing-hero__media" aria-hidden="true">
+        <video
+          class="landing-hero__video"
+          autoplay
+          muted
+          loop
+          playsinline
+          poster="assets/hero-beach-woman.png"
+        >
+          <source src="assets/Buddy%20Buddha%20Buddhist%20Beach%20Scene.mp4" type="video/mp4">
+        </video>
+        <img class="landing-hero__img landing-hero__img--fallback" src="assets/hero-beach-woman.png" alt="">
+      </div>
+      <div class="landing-hero__scrim" aria-hidden="true"></div>
+      <div class="landing-hero__inner">
+        <div class="landing-hero__copy">
+          <h1 id="hero-title">Find Your<br>Inner Peace</h1>
+          <p class="landing-hero__lead">
+            Simple teachings. Mindful living.<br>
+            Inspiration for a calmer mind, kinder heart, and happier life.
           </p>
-          <div class="hero__ctas">
-            <a class="btn-primary" href="buddy-buddha-app.html">Try the daily quote app</a>
-            <button type="button" class="btn-secondary" id="install-btn" hidden>Install app</button>
-            <a class="btn-secondary" href="shop.html">Browse the shop</a>
+          <div class="landing-hero__ctas">
+            <a class="btn-primary" href="buddy-buddha-app.html">Explore the Journey</a>
+            <button type="button" class="btn-secondary" id="install-btn">Install app</button>
           </div>
-          <p class="install-hint" id="install-fallback" hidden>
+          <p class="install-hint landing-hero__hint" id="install-fallback" hidden>
             <strong>iPhone / iPad:</strong> open the app in Safari, tap Share, then &ldquo;Add to Home Screen.&rdquo;
+            On Android or desktop Chrome, use the browser menu to install when it appears.
           </p>
         </div>
       </div>
@@ -55,8 +55,8 @@
     <section class="section" aria-labelledby="about-title">
       <div class="section__inner">
         <div class="image-split">
-          <div class="image-card image-card--logo">
-            <img src="BuddyBuddha-02.png" alt="Buddy Buddha character" width="600" height="600" />
+          <div class="image-card">
+            <img src="assets/Buddy%20Buddha%20App%20Over%20Shoulder%20View.png" alt="Person holding a phone showing the Buddy Buddha daily quote app" width="1200" height="900">
           </div>
           <div>
             <h2 id="about-title">About Buddy Buddha</h2>
@@ -71,27 +71,27 @@
       </div>
     </section>
 
-    <section class="section" style="background: linear-gradient(180deg, transparent, rgba(230, 138, 73, 0.06))" aria-labelledby="features-title">
+    <section class="section section--features" aria-labelledby="features-title">
       <div class="section__inner">
-        <h2 id="features-title" style="text-align: center; margin-bottom: 2rem">What you get</h2>
+        <h2 id="features-title" class="section-title-center">What you get</h2>
         <div class="panels">
           <article class="panel">
             <div class="panel__img">
-              <img src="assets/panel-daily.svg" alt="" width="400" height="300" />
+              <img src="assets/panel-daily.svg" alt="" width="400" height="300">
             </div>
             <h3>Daily quotes</h3>
             <p>A full year of prompts—browse today, yesterday, or tomorrow.</p>
           </article>
           <article class="panel">
             <div class="panel__img">
-              <img src="assets/panel-share.svg" alt="" width="400" height="300" />
+              <img src="assets/panel-share.svg" alt="" width="400" height="300">
             </div>
             <h3>Share the calm</h3>
             <p>Share or copy lines that resonate—right from your phone.</p>
           </article>
           <article class="panel">
             <div class="panel__img">
-              <img src="assets/panel-calm.svg" alt="" width="400" height="300" />
+              <img src="assets/panel-calm.svg" alt="" width="400" height="300">
             </div>
             <h3>Mindful goods</h3>
             <p>Clothing and more, curated to match the Buddy Buddha mood.</p>
@@ -108,12 +108,37 @@
         </div>
       </div>
     </section>
+
+    <section class="merch-hero" aria-labelledby="merch-title">
+      <div class="merch-hero__media" aria-hidden="true">
+        <video
+          class="merch-hero__video"
+          muted
+          loop
+          playsinline
+          autoplay
+          poster="assets/hero-beach-woman.png"
+        >
+          <source src="assets/Buddy%20Buddha%20Tshirt%20Beach.mp4" type="video/mp4">
+        </video>
+        <img class="merch-hero__img--fallback" src="assets/hero-beach-woman.png" alt="">
+      </div>
+      <div class="merch-hero__scrim" aria-hidden="true"></div>
+      <div class="merch-hero__inner">
+        <div class="merch-hero__copy">
+          <span class="coming-soon merch-hero__coming">Coming soon</span>
+          <h2 id="merch-title" class="merch-hero__title">Merchandise</h2>
+          <p class="merch-hero__lead">
+            Buddy Buddha apparel is almost here—same warm energy as the app, made to wear every day.
+          </p>
+        </div>
+      </div>
+    </section>
   </main>
 
-  <footer class="site-footer">
-    <p>&copy; Buddy Buddha. <a href="buddy-buddha-app.html">Daily quote app</a> · <a href="shop.html">Shop</a></p>
-  </footer>
+  <div id="site-footer-root"></div>
 
+  <script src="site-shell.js"></script>
   <script>
     (function () {
       var installBtn = document.getElementById("install-btn");
@@ -123,27 +148,23 @@
       window.addEventListener("beforeinstallprompt", function (e) {
         e.preventDefault();
         deferred = e;
-        installBtn.hidden = false;
       });
 
       installBtn.addEventListener("click", function () {
-        if (!deferred) return;
-        deferred.prompt();
-        deferred.userChoice.finally(function () {
-          deferred = null;
-          installBtn.hidden = true;
-        });
+        if (deferred) {
+          deferred.prompt();
+          deferred.userChoice.finally(function () {
+            deferred = null;
+          });
+          return;
+        }
+        fallback.hidden = false;
+        fallback.scrollIntoView({ behavior: "smooth", block: "nearest" });
       });
 
       window.addEventListener("appinstalled", function () {
-        installBtn.hidden = true;
+        deferred = null;
       });
-
-      var isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) ||
-        (navigator.platform === "MacIntel" && navigator.maxTouchPoints > 1);
-      if (isIOS) {
-        fallback.hidden = false;
-      }
 
       if ("serviceWorker" in navigator) {
         navigator.serviceWorker.register("sw.js").catch(function () {});

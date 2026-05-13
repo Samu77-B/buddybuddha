@@ -1,13 +1,19 @@
 /* BuddyBuddha — offline shell cache */
-const CACHE = "buddybuddha-v1";
+const CACHE = "buddybuddha-v10";
 const ASSETS = [
   "./",
   "./index.html",
   "./buddy-buddha-app.html",
   "./shop.html",
   "./site.css",
+  "./site-shell.js",
+  "./partials/header.html",
+  "./partials/footer.html",
   "./manifest.webmanifest",
-  "./BuddyBuddha-02.png",
+  "./assets/fav.png",
+  "./assets/buddyBuddha-logo.svg",
+  "./assets/hero-beach-woman.png",
+  "./assets/Buddy%20Buddha%20App%20Over%20Shoulder%20View.png",
   "./assets/panel-daily.svg",
   "./assets/panel-share.svg",
   "./assets/panel-calm.svg",

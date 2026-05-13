@@ -1,14 +1,15 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="theme-color" content="#E68A49" />
-  <meta name="apple-mobile-web-app-capable" content="yes" />
-  <meta name="apple-mobile-web-app-title" content="Buddy Buddha" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#E68A49">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-title" content="Buddy Buddha">
   <title>Buddy Buddha – Daily Quote</title>
-  <link rel="manifest" href="manifest.webmanifest" />
-  <link rel="apple-touch-icon" href="BuddyBuddha-02.png" />
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="icon" href="assets/fav.png" type="image/png">
+  <link rel="apple-touch-icon" href="assets/fav.png">
   <style>
     * { box-sizing: border-box; margin: 0; padding: 0; }
 
@@ -16,15 +17,124 @@
       font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
       background: #F5C89A;
       min-height: 100vh;
+      min-height: 100dvh;
       display: flex;
       align-items: center;
       justify-content: center;
-      padding: 2rem;
+      padding: max(1rem, env(safe-area-inset-top)) max(1rem, env(safe-area-inset-right)) max(1rem, env(safe-area-inset-bottom)) max(1rem, env(safe-area-inset-left));
+    }
+
+    /* ── Install prompt ── */
+    .install-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.45);
+      display: flex;
+      align-items: flex-end;
+      justify-content: center;
+      padding: 16px;
+      z-index: 999;
+    }
+
+    .install-overlay[hidden] { display: none; }
+
+    .install-card {
+      width: min(520px, calc(100vw - 32px));
+      background: #fff;
+      border-radius: 18px;
+      padding: 14px 14px 12px;
+      box-shadow: 0 24px 60px rgba(0,0,0,0.35);
+    }
+
+    .install-row {
+      display: flex;
+      gap: 12px;
+      align-items: center;
+    }
+
+    .install-icon {
+      width: 44px;
+      height: 44px;
+      border-radius: 12px;
+      background: #F5C89A;
+      display: grid;
+      place-items: center;
+      flex: 0 0 auto;
+      overflow: hidden;
+    }
+
+    .install-icon img {
+      width: 44px;
+      height: 44px;
+      object-fit: contain;
+    }
+
+    .install-copy {
+      flex: 1;
+      min-width: 0;
+    }
+
+    .install-title {
+      font-size: 14px;
+      font-weight: 800;
+      color: #2b1a0b;
+      margin-bottom: 2px;
+    }
+
+    .install-sub {
+      font-size: 12px;
+      color: #6a4a31;
+      line-height: 1.35;
+    }
+
+    .install-actions {
+      display: flex;
+      gap: 8px;
+      margin-top: 10px;
+      justify-content: flex-end;
+    }
+
+    .install-btn {
+      border: 0;
+      border-radius: 999px;
+      padding: 10px 14px;
+      font-size: 13px;
+      font-weight: 700;
+      cursor: pointer;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    .install-btn-secondary {
+      background: rgba(232, 128, 58, 0.10);
+      color: #a14f1d;
+    }
+
+    .install-btn-primary {
+      background: #E8803A;
+      color: #fff;
+    }
+
+    .install-btn-primary:hover { background: #d06e2a; }
+
+    .status-icons {
+      display: flex;
+      gap: 4px;
+      align-items: center;
+    }
+
+    .back-link {
+      display: block;
+      margin-top: 8px;
+      font-size: 11px;
+      color: #7a5030;
+      text-decoration: none;
+      font-weight: 600;
     }
 
     /* ── Phone shell ── */
     .phone {
-      width: 320px;
+      width: min(320px, calc(100vw - 2rem));
+      max-width: 100%;
       background: #1a1a1a;
       border-radius: 48px;
       padding: 10px;
@@ -36,7 +146,7 @@
       border-radius: 40px;
       overflow: hidden;
       background: #FBE8D0;
-      min-height: 660px;
+      min-height: min(660px, calc(100dvh - 4rem));
       display: flex;
       flex-direction: column;
       position: relative;
@@ -251,9 +361,60 @@
     }
 
     .bnav-item.active { color: #E8803A; }
+
+    @media (max-width: 380px) {
+      .phone {
+        border-radius: 36px;
+        padding: 8px;
+      }
+
+      .screen {
+        border-radius: 30px;
+        min-height: min(640px, calc(100dvh - 3rem));
+      }
+
+      .nav-row {
+        margin-left: 10px;
+        margin-right: 10px;
+        gap: 6px;
+      }
+
+      .reflection-bar {
+        margin-left: 10px;
+        margin-right: 10px;
+      }
+
+      .quote-text {
+        font-size: 18px;
+      }
+
+      .quote-attr {
+        font-size: 17px;
+      }
+    }
   </style>
 </head>
 <body>
+
+<div class="install-overlay" id="install-overlay" hidden>
+  <div class="install-card" role="dialog" aria-modal="true" aria-labelledby="install-title">
+    <div class="install-row">
+      <div class="install-icon" aria-hidden="true">
+        <img src="assets/buddyBuddha-logo.svg" alt="">
+      </div>
+      <div class="install-copy">
+        <div class="install-title" id="install-title">Install Buddy Buddha</div>
+        <div class="install-sub" id="install-sub">
+          Add this app to your home screen for a faster, distraction-free daily quote.
+        </div>
+      </div>
+    </div>
+    <div class="install-actions">
+      <button class="install-btn install-btn-secondary" type="button" id="install-later">Not now</button>
+      <button class="install-btn install-btn-primary" type="button" id="install-go">Install</button>
+    </div>
+  </div>
+</div>
 
 <div class="phone">
   <div class="screen">
@@ -262,7 +423,7 @@
     <div class="status-bar">
       <div class="notch"></div>
       <span id="clock">9:41</span>
-      <span style="display:flex;gap:4px;align-items:center;">
+      <span class="status-icons">
         <!-- Signal bars -->
         <svg width="12" height="10" viewBox="0 0 12 10"><rect x="0" y="4" width="2" height="6" rx="1" fill="#5a4030"/><rect x="3" y="2.5" width="2" height="7.5" rx="1" fill="#5a4030"/><rect x="6" y="1" width="2" height="9" rx="1" fill="#5a4030"/><rect x="9" y="0" width="2" height="10" rx="1" fill="#5a4030"/></svg>
         <!-- WiFi -->
@@ -274,11 +435,8 @@
 
     <!-- Logo -->
     <div class="logo-area">
-      <!--
-        LOGO: BuddyBuddha-02.png in the site root.
-      -->
-      <img src="BuddyBuddha-02.png" alt="Buddy Buddha" />
-      <a href="index.html" style="display:block;margin-top:8px;font-size:11px;color:#7a5030;text-decoration:none;font-weight:600;">← Buddy Buddha website</a>
+      <img src="assets/buddyBuddha-logo.svg" alt="Buddy Buddha">
+      <a href="index.html" class="back-link">← Buddy Buddha website</a>
     </div>
 
     <!-- Quote area -->
@@ -320,7 +478,7 @@
     <!-- Reflection bar -->
     <div class="reflection-bar">
       <span class="reflection-label">Today's Reflection</span>
-      <button class="share-btn" onclick="shareQuote()">
+      <button class="share-btn" type="button" onclick="shareQuote()">
         <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
           <path d="M9 1l4 4-4 4" stroke="#fff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
           <path d="M13 5H5a4 4 0 000 8h1" stroke="#fff" stroke-width="1.5" stroke-linecap="round"/>
@@ -364,6 +522,97 @@
 </div>
 
 <script>
+  // ── Install prompt (PWA) ────────────────────────────────────────────────────
+  (function () {
+    var overlay = document.getElementById('install-overlay');
+    var btnLater = document.getElementById('install-later');
+    var btnGo = document.getElementById('install-go');
+    var sub = document.getElementById('install-sub');
+
+    var deferred = null;
+
+    function isStandalone() {
+      return (window.matchMedia && window.matchMedia('(display-mode: standalone)').matches) ||
+        (window.navigator && window.navigator.standalone === true);
+    }
+
+    function isIOS() {
+      return /iPad|iPhone|iPod/.test(navigator.userAgent) ||
+        (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
+    }
+
+    function showOverlay(kind) {
+      if (isStandalone()) return;
+      if (!overlay) return;
+      overlay.hidden = false;
+
+      if (kind === 'ios') {
+        sub.textContent = 'On iPhone/iPad: tap Share, then “Add to Home Screen”.';
+        btnGo.textContent = 'Got it';
+      } else {
+        sub.textContent = 'Add this app to your home screen for a faster, distraction-free daily quote.';
+        btnGo.textContent = 'Install';
+      }
+    }
+
+    function hideOverlay() {
+      if (!overlay) return;
+      overlay.hidden = true;
+    }
+
+    // If the user opens the app page directly on iOS, guide them.
+    if (isIOS() && !isStandalone()) {
+      // Avoid nagging every time: once per day.
+      try {
+        var last = localStorage.getItem('bb_install_hint_date');
+        var today = new Date().toISOString().slice(0, 10);
+        if (last !== today) {
+          localStorage.setItem('bb_install_hint_date', today);
+          showOverlay('ios');
+        }
+      } catch (e) {}
+    }
+
+    window.addEventListener('beforeinstallprompt', function (e) {
+      // Chrome/Edge/Android: capture and show our own UI.
+      e.preventDefault();
+      deferred = e;
+
+      // Avoid nagging: only show once per session.
+      try {
+        if (sessionStorage.getItem('bb_install_shown') === '1') return;
+        sessionStorage.setItem('bb_install_shown', '1');
+      } catch (err) {}
+
+      showOverlay('pwa');
+    });
+
+    btnLater && btnLater.addEventListener('click', function () {
+      hideOverlay();
+    });
+
+    btnGo && btnGo.addEventListener('click', function () {
+      if (isIOS()) {
+        hideOverlay();
+        return;
+      }
+      if (!deferred) {
+        hideOverlay();
+        return;
+      }
+      deferred.prompt();
+      deferred.userChoice.finally(function () {
+        deferred = null;
+        hideOverlay();
+      });
+    });
+
+    window.addEventListener('appinstalled', function () {
+      deferred = null;
+      hideOverlay();
+    });
+  })();
+
   // ── 365 quotes ──────────────────────────────────────────────────────────────
   const quotes = [
     { q: "Do not dwell in the past, do not dream of the future, concentrate the mind on the present moment.", a: "Buddha" },
