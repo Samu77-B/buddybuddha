@@ -44,10 +44,6 @@
             <a class="btn-primary" href="buddy-buddha-app.html">Explore the Journey</a>
             <button type="button" class="btn-secondary" id="install-btn">Install app</button>
           </div>
-          <p class="install-hint landing-hero__hint" id="install-fallback" hidden>
-            <strong>iPhone / iPad:</strong> open the app in Safari, tap Share, then &ldquo;Add to Home Screen.&rdquo;
-            On Android or desktop Chrome, use the browser menu to install when it appears.
-          </p>
         </div>
       </div>
     </section>
@@ -142,7 +138,6 @@
   <script>
     (function () {
       var installBtn = document.getElementById("install-btn");
-      var fallback = document.getElementById("install-fallback");
       var deferred = null;
 
       window.addEventListener("beforeinstallprompt", function (e) {
@@ -158,8 +153,7 @@
           });
           return;
         }
-        fallback.hidden = false;
-        fallback.scrollIntoView({ behavior: "smooth", block: "nearest" });
+        window.location.href = "buddy-buddha-app.html";
       });
 
       window.addEventListener("appinstalled", function () {
