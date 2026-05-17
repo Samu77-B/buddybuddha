@@ -6,7 +6,10 @@
 - **Pages**:
   - `index.html`: marketing landing page + PWA install prompt wiring.
   - `buddy-buddha-app.html`: the “daily quote app” (quotes are hard-coded in the file).
-  - `shop.html`: shop landing page (currently links to a placeholder external store URL).
+  - `shop.html`: product grid — add to basket by size.
+  - `cart.html`: saved basket (localStorage) → Stripe Checkout via `server/`.
+  - `data/products.json`: catalog + Stripe `price_...` IDs (one per size).
+  - `server/`: small Node API that creates Stripe Checkout Sessions (deploy separately, e.g. Railway).
 - **PWA/offline**:
   - `manifest.webmanifest`: PWA metadata; `start_url` points at `buddy-buddha-app.html`.
   - `sw.js`: service worker that pre-caches a small asset list and serves cache-first.
@@ -23,6 +26,34 @@ python -m http.server 8000
 
 Open `http://localhost:8000`.
 
+### Shop + basket + Stripe (local)
+
+1. Static site: `python -m http.server 8000`
+2. Checkout API:
+
+```bash
+cd server
+cp .env.example .env
+# Edit .env: STRIPE_SECRET_KEY, SUCCESS_URL, CANCEL_URL, ALLOWED_ORIGINS
+npm install
+npm start
+```
+
+3. `js/checkout-config.js` — set `apiBase` to `http://localhost:4242` (or your deployed API URL).
+4. In Stripe Dashboard, create products/prices; paste `price_...` IDs into `data/products.json` (replace `price_REPLACE_*`).
+
+Flow: **Shop → Add to basket → Basket → Checkout with Stripe** (Stripe shows final total, tax/shipping if configured).
+
+### Shop on hold
+
+The live catalog and basket are **turned off** in the UI while Stripe is being set up. Toggle in [`js/shop-config.js`](js/shop-config.js):
+
+```js
+window.BB_SHOP = { enabled: false };  // set true when Stripe + products.json are ready
+```
+
+Basket/checkout code (`server/`, `js/cart.js`, `data/products.json`) stays in the repo for launch day.
+
 ## Hosting (current)
 
 - **Where you said it’s hosted**: Hostinger.
@@ -34,7 +65,7 @@ Open `http://localhost:8000`.
 ### What this means in practice
 
 - You can keep hosting this site almost anywhere (Hostinger, GitHub Pages, Netlify, Vercel, S3, etc.) because it’s just static files.
-- The “daily quote app” is client-side only; there’s no backend in this repo today.
+- The daily quote app is static; **checkout** uses the `server/` API (host on Railway/Render, not Hostinger PHP).
 
 ## Ecommerce: options overview
 

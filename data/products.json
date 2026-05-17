@@ -1,0 +1,61 @@
+{
+  "currency": "gbp",
+  "products": [
+    {
+      "id": "tee-sunrise",
+      "name": "Sunrise Tee",
+      "description": "Soft cotton tee with warm Buddy Buddha artwork.",
+      "image": "assets/panel-calm.svg",
+      "unitAmount": 2800,
+      "variants": [
+        { "size": "S", "stripePriceId": "price_REPLACE_SUNRISE_S" },
+        { "size": "M", "stripePriceId": "price_REPLACE_SUNRISE_M" },
+        { "size": "L", "stripePriceId": "price_REPLACE_SUNRISE_L" },
+        { "size": "XL", "stripePriceId": "price_REPLACE_SUNRISE_XL" },
+        { "size": "XXL", "stripePriceId": "price_REPLACE_SUNRISE_XXL" }
+      ]
+    },
+    {
+      "id": "tee-lotus",
+      "name": "Lotus Tee",
+      "description": "Calm lotus print on a relaxed everyday fit.",
+      "image": "assets/panel-daily.svg",
+      "unitAmount": 2800,
+      "variants": [
+        { "size": "S", "stripePriceId": "price_REPLACE_LOTUS_S" },
+        { "size": "M", "stripePriceId": "price_REPLACE_LOTUS_M" },
+        { "size": "L", "stripePriceId": "price_REPLACE_LOTUS_L" },
+        { "size": "XL", "stripePriceId": "price_REPLACE_LOTUS_XL" },
+        { "size": "XXL", "stripePriceId": "price_REPLACE_LOTUS_XXL" }
+      ]
+    },
+    {
+      "id": "tee-peace",
+      "name": "Peace Tee",
+      "description": "Minimal design for mindful days.",
+      "image": "assets/panel-share.svg",
+      "unitAmount": 2800,
+      "variants": [
+        { "size": "S", "stripePriceId": "price_REPLACE_PEACE_S" },
+        { "size": "M", "stripePriceId": "price_REPLACE_PEACE_M" },
+        { "size": "L", "stripePriceId": "price_REPLACE_PEACE_L" },
+        { "size": "XL", "stripePriceId": "price_REPLACE_PEACE_XL" },
+        { "size": "XXL", "stripePriceId": "price_REPLACE_PEACE_XXL" }
+      ]
+    },
+    {
+      "id": "tee-buddha",
+      "name": "Buddy Classic Tee",
+      "description": "The smiling Buddy Buddha on premium cotton.",
+      "image": "assets/buddyBuddha-logo.svg",
+      "unitAmount": 2800,
+      "variants": [
+        { "size": "S", "stripePriceId": "price_REPLACE_BUDDHA_S" },
+        { "size": "M", "stripePriceId": "price_REPLACE_BUDDHA_M" },
+        { "size": "L", "stripePriceId": "price_REPLACE_BUDDHA_L" },
+        { "size": "XL", "stripePriceId": "price_REPLACE_BUDDHA_XL" },
+        { "size": "XXL", "stripePriceId": "price_REPLACE_BUDDHA_XXL" }
+      ]
+    }
+  ]
+}

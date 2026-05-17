@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Your Buddy Buddha basket.">
+  <meta name="theme-color" content="#E68A49">
+  <title>Basket — Buddy Buddha</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700&family=Fraunces:opsz,wght@9..144,600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="site.css">
+  <link rel="icon" href="assets/fav.png" type="image/png">
+  <link rel="apple-touch-icon" href="assets/fav.png">
+  <script src="js/shop-config.js"></script>
+</head>
+<body data-nav-active="shop">
+  <div id="site-header-root"></div>
+
+  <main class="cart-page">
+    <section class="section">
+      <div class="section__inner section__inner--narrow">
+        <div class="js-shop-hold-only" hidden>
+          <h1>Shop coming soon</h1>
+          <p class="cart-page__lead">
+            We&rsquo;re still setting up payments with Stripe. The basket will be back when the shop opens.
+          </p>
+          <div class="hero__ctas" style="margin-top: 1.25rem;">
+            <a class="btn-primary" href="shop.html">Back to shop</a>
+            <a class="btn-secondary" href="buddy-buddha-app.html">Today&rsquo;s wisdom</a>
+          </div>
+        </div>
+
+        <div class="js-shop-only" hidden>
+          <h1>Your basket</h1>
+          <p class="cart-page__lead">Saved on this device. Checkout is handled securely by Stripe.</p>
+
+          <p class="cart-empty" id="cart-empty">Your basket is empty. <a href="shop.html">Browse the shop</a></p>
+
+          <ul class="cart-lines" id="cart-lines"></ul>
+
+          <div class="cart-summary" id="cart-summary" hidden>
+            <p class="cart-summary__row">
+              <span>Subtotal</span>
+              <strong id="cart-subtotal">£0.00</strong>
+            </p>
+            <p class="cart-summary__hint">Shipping and tax are calculated at Stripe checkout.</p>
+            <button type="button" class="btn-primary cart-summary__checkout" id="cart-checkout-btn">
+              Checkout with Stripe
+            </button>
+            <p class="cart-checkout-msg" id="cart-checkout-msg" role="status" aria-live="polite"></p>
+            <a class="btn-secondary cart-summary__continue" href="shop.html">Continue shopping</a>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <div id="site-footer-root"></div>
+
+  <script src="js/shop-hold.js"></script>
+  <script src="js/cart.js"></script>
+  <script src="js/checkout-config.js"></script>
+  <script src="js/cart-badge.js"></script>
+  <script src="site-shell.js"></script>
+  <script src="js/cart-page.js"></script>
+</body>
+</html>

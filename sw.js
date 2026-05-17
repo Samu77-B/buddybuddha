@@ -1,12 +1,19 @@
 /* BuddyBuddha — offline shell cache */
-const CACHE = "buddybuddha-v10";
+const CACHE = "buddybuddha-v11";
 const ASSETS = [
   "./",
   "./index.html",
   "./buddy-buddha-app.html",
   "./shop.html",
+  "./cart.html",
   "./site.css",
   "./site-shell.js",
+  "./js/cart.js",
+  "./js/cart-badge.js",
+  "./js/shop.js",
+  "./js/cart-page.js",
+  "./js/checkout-config.js",
+  "./data/products.json",
   "./partials/header.html",
   "./partials/footer.html",
   "./manifest.webmanifest",

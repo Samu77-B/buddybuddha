@@ -12,61 +12,104 @@
   <link rel="stylesheet" href="site.css">
   <link rel="icon" href="assets/fav.png" type="image/png">
   <link rel="apple-touch-icon" href="assets/fav.png">
+  <script src="js/shop-config.js"></script>
 </head>
 <body data-nav-active="shop">
   <div id="site-header-root"></div>
 
   <main>
-    <section class="hero hero--compact">
-      <div class="hero__bg" aria-hidden="true"></div>
-      <div class="hero__inner">
-        <div class="hero__visual">
-          <div class="hero__logo-ring hero__logo-ring--shop">
-            <img src="assets/buddyBuddha-logo.svg" alt="Buddy Buddha" width="400" height="400">
+    <!-- Coming soon (default while BB_SHOP.enabled is false) -->
+    <div class="js-shop-hold-only" hidden>
+      <section class="hero hero--compact">
+        <div class="hero__bg" aria-hidden="true"></div>
+        <div class="hero__inner">
+          <div class="hero__visual">
+            <div class="hero__logo-ring hero__logo-ring--shop">
+              <img src="assets/buddyBuddha-logo.svg" alt="Buddy Buddha" width="400" height="400">
+            </div>
+          </div>
+          <div class="hero__copy">
+            <h1>Wear the calm</h1>
+            <p class="lead">
+              Comfortable pieces with Buddy Buddha&rsquo;s warm, playful energy. The shop is almost ready.
+            </p>
+            <div class="hero__ctas">
+              <span class="coming-soon">Coming soon</span>
+              <a class="btn-secondary" href="buddy-buddha-app.html">Today&rsquo;s wisdom</a>
+              <a class="btn-secondary" href="index.html">Back to home</a>
+            </div>
+            <p class="install-hint hint-muted">
+              We&rsquo;re finishing Stripe setup. Check back soon for tees and more.
+            </p>
           </div>
         </div>
-        <div class="hero__copy">
-          <h1>Wear the calm</h1>
-          <p class="lead">
-            Comfortable pieces with Buddy Buddha&rsquo;s warm, playful energy. When your store is live, one tap takes visitors straight to checkout.
-          </p>
-          <div class="hero__ctas">
-            <span class="coming-soon">Coming soon</span>
-            <a class="btn-secondary" href="index.html">Back to home</a>
-          </div>
-          <p class="install-hint hint-muted">
-            Merch is on the way. When it&rsquo;s ready, this page will link straight to checkout.
-          </p>
-        </div>
-      </div>
-    </section>
+      </section>
 
-    <section class="section">
-      <div class="section__inner">
-        <div class="image-split reverse">
-          <div class="image-card">
-            <img src="assets/panel-calm.svg" alt="" width="800" height="600" class="img-cover-4x3">
-          </div>
-          <div>
-            <h2>Clothing that fits the vibe</h2>
-            <p>
-              We&rsquo;re building a line that feels as good as a deep breath—soft fabrics, relaxed fits, and designs that nod to mindfulness without taking themselves too seriously.
-            </p>
-            <p>
-              Check back as we add drops, or follow the link above once your ecommerce site is connected.
-            </p>
+      <section class="section">
+        <div class="section__inner">
+          <div class="image-split reverse">
+            <div class="image-card">
+              <img src="assets/panel-calm.svg" alt="" width="800" height="600" class="img-cover-4x3">
+            </div>
+            <div>
+              <h2>Clothing that fits the vibe</h2>
+              <p>
+                We&rsquo;re building a line that feels as good as a deep breath—soft fabrics, relaxed fits, and designs that nod to mindfulness without taking themselves too seriously.
+              </p>
+              <p>
+                In the meantime, enjoy the <a href="buddy-buddha-app.html">daily quote</a>—365 days of wisdom, no download required.
+              </p>
+            </div>
           </div>
         </div>
-      </div>
-    </section>
+      </section>
+    </div>
+
+    <!-- Live shop (shown when BB_SHOP.enabled is true) -->
+    <div class="js-shop-only" hidden>
+      <section class="hero hero--compact">
+        <div class="hero__bg" aria-hidden="true"></div>
+        <div class="hero__inner">
+          <div class="hero__copy hero__copy--shop">
+            <h1>Wear the calm</h1>
+            <p class="lead">
+              Choose your size, add to basket, and checkout securely with Stripe.
+            </p>
+            <div class="hero__ctas">
+              <a class="btn-secondary" href="cart.html">View basket</a>
+              <a class="btn-secondary" href="buddy-buddha-app.html">Today&rsquo;s wisdom</a>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="section shop-section" aria-labelledby="shop-catalog-title">
+        <div class="section__inner">
+          <h2 id="shop-catalog-title">T-shirts</h2>
+          <p class="shop-intro">
+            Four designs, sizes S&ndash;XXL. Your basket is saved on this device until you check out.
+          </p>
+          <p class="shop-notice" id="shop-stripe-notice" hidden>
+            <strong>Setup:</strong> Replace placeholder Stripe price IDs in <code>data/products.json</code> and deploy the checkout API (see <code>server/README.md</code>).
+          </p>
+          <div class="shop-grid" id="shop-grid"></div>
+        </div>
+      </section>
+    </div>
   </main>
 
   <div id="site-footer-root"></div>
 
+  <script src="js/shop-hold.js"></script>
+  <script src="js/cart.js"></script>
+  <script src="js/cart-badge.js"></script>
   <script src="site-shell.js"></script>
+  <script src="js/shop.js"></script>
   <script>
-    if ("serviceWorker" in navigator) {
-      navigator.serviceWorker.register("sw.js").catch(function () {});
+    if (window.BB_SHOP && window.BB_SHOP.enabled) {
+      if ("serviceWorker" in navigator) {
+        navigator.serviceWorker.register("sw.js").catch(function () {});
+      }
     }
   </script>
 </body>
